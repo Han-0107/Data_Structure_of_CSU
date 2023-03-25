@@ -28,8 +28,6 @@ PS：所有代码为本人编写，难免存在问题或不合理的地方。如
 
 #### 1.2.1 基本定义
 
-##### 1.2.1.1 基本结点
-
 ```c
 typedef struct Lnode {
     int coef = 0;				// 系数项
@@ -37,8 +35,6 @@ typedef struct Lnode {
     struct Lnode* next = NULL;
 } L;
 ```
-
-##### 1.2.1.1 部分数据定义
 
 A_num: A结点中的元素数量，用于对A链表进行创建时对for循环次数进行规定。
 
