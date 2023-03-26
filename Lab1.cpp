@@ -23,15 +23,17 @@ int A_num, B_num;
 void In() {
     scanf("%d", &A_num);
     for (int i = 0; i < A_num; i++) {
-        scanf("%d", &EXP_A[i]);
         scanf("%d", &COEF_A[i]);
+        scanf("%d", &EXP_A[i]);
+
     }
     printf("The A formula has been typed in.\n");
 
     scanf("%d", &B_num);
     for (int i = 0; i < B_num; i++) {
-        scanf("%d", &EXP_B[i]);
         scanf("%d", &COEF_B[i]);
+        scanf("%d", &EXP_B[i]);
+
     }
     printf("The B formula has been typed in.\n");
 }
@@ -80,19 +82,24 @@ void Display() {
     p_A = head_A;
     printf("A(x)        =:");
 
-    if (p_A->exp == 0) {                 // 第一个元素
-        printf("%d ", p_A->coef);
+    if(p_A->coef == 1) {
+        printf("x^");
+        printf("%d", p_A->exp);
+        p_A = p_A->next;
+    }
+    else if (p_A->exp == 0) {                 // 第一个元素
+        printf("%d", p_A->coef);
         p_A = p_A->next;
     }
     else if (p_A->exp == 1) {
         printf("%d", p_A->coef);
-        printf("x ");
+        printf("x");
         p_A = p_A->next;
     }
     else {
         printf("%d", p_A->coef);
         printf("x^");
-        printf("%d ", p_A->exp);
+        printf("%d", p_A->exp);
         p_A = p_A->next;
     }
     if (p_A == NULL) { printf("\n"); }
@@ -103,13 +110,13 @@ void Display() {
         else if (p_A->coef < 0) {
             printf("%d", p_A->coef);
             printf("x^");
-            printf("%d ", p_A->exp);
+            printf("%d", p_A->exp);
             p_A = p_A->next;
         }
         else {
             if (p_A->exp == 1) {
                 printf("+%d", p_A->coef);
-                printf("x ");
+                printf("x");
                 p_A = p_A->next;
             }
             else if (p_A->exp == 0) {
@@ -119,7 +126,7 @@ void Display() {
             else {
                 printf("+%d", p_A->coef);
                 printf("x^");
-                printf("%d ", p_A->exp);
+                printf("%d", p_A->exp);
                 p_A = p_A->next;
             }
         }
@@ -152,18 +159,18 @@ void Display() {
     printf("B(x)        =:");
 
     if (p_B->exp == 0) {                 // 第一个元素
-        printf("%d ", p_B->coef);
+        printf("%d", p_B->coef);
         p_B = p_B->next;
     }
     else if (p_B->exp == 1) {
         printf("%d", p_B->coef);
-        printf("x ");
+        printf("x");
         p_B = p_B->next;
     }
     else {
         printf("%d", p_B->coef);
         printf("x^");
-        printf("%d ", p_B->exp);
+        printf("%d", p_B->exp);
         p_B = p_B->next;
     }
     if (p_B == NULL) { printf("\n"); }
@@ -174,13 +181,13 @@ void Display() {
         else if (p_B->coef < 0) {
             printf("%d", p_B->coef);
             printf("x^");
-            printf("%d ", p_B->exp);
+            printf("%d", p_B->exp);
             p_B = p_B->next;
         }
         else {
             if (p_B->exp == 1) {
                 printf("+%d", p_B->coef);
-                printf("x ");
+                printf("x");
                 p_B = p_B->next;
             }
             else if (p_B->exp == 0) {
@@ -190,7 +197,7 @@ void Display() {
             else {
                 printf("+%d", p_B->coef);
                 printf("x^");
-                printf("%d ", p_B->exp);
+                printf("%d", p_B->exp);
                 p_B = p_B->next;
             }
         }
@@ -218,27 +225,35 @@ void Display() {
         }
     }
 #endif
-
+    int flag_del = 0;
 #ifdef print_ans
     // ADD
     ans_a = head_ans_a;
     printf("A(x) + B(x) =:");
 
-    if (ans_a->exp == 0) {                 // 第一个元素
-        printf("%d ", ans_a->coef);
+    if(ans_a->coef == 0) {
+        ans_a = ans_a->next;
+        flag_del = 1;
+    }
+    else if(ans_a->coef == 1) {
+        printf("x^");
+        printf("%d", ans_a->exp);
+        ans_a = ans_a->next;
+    }
+    else if (ans_a->exp == 0) {                 // 第一个元素
+        printf("%d", ans_a->coef);
         ans_a = ans_a->next;
     }
     else if (ans_a->exp == 1) {
         printf("%d", ans_a->coef);
-        printf("x ");
+        printf("x");
         ans_a = ans_a->next;
     }
     else {
         printf("%d", ans_a->coef);
         printf("x^");
-        printf("%d ", ans_a->exp);
+        printf("%d", ans_a->exp);
         ans_a = ans_a->next;
-
     }
 
     while (ans_a != NULL) {
@@ -248,22 +263,50 @@ void Display() {
         else if (ans_a->coef < 0) {
             printf("%d", ans_a->coef);
             printf("x^");
-            printf("%d ", ans_a->exp);
+            printf("%d", ans_a->exp);
             ans_a = ans_a->next;
         }
         else {
-            if (ans_a->exp == 1) {
-                printf("+%d", ans_a->coef);
-                printf("x ");
-                ans_a = ans_a->next;
+            if(ans_a->coef == 1) {
+                if(flag_del == 1) {
+                    printf("x^");
+                    printf("%d", ans_a->exp);
+                    ans_a = ans_a->next;
+                }
+                else {
+                    printf("+x^");
+                    printf("%d", ans_a->exp);
+                    ans_a = ans_a->next;
+                }
+            }
+            else if (ans_a->exp == 1) {
+                if(flag_del == 1) {
+                    printf("%d", ans_a->coef);
+                    printf("x");
+                    ans_a = ans_a->next;
+                }
+                else {
+                    printf("+%d", ans_a->coef);
+                    printf("x");
+                    ans_a = ans_a->next;
+                }
             }
             else {
-                printf("+%d", ans_a->coef);
-                printf("x^");
-                printf("%d ", ans_a->exp);
-                ans_a = ans_a->next;
+                if(flag_del) {
+                    printf("%d", ans_a->coef);
+                    printf("x^");
+                    printf("%d", ans_a->exp);
+                    ans_a = ans_a->next;
+                }
+                else {
+                    printf("+%d", ans_a->coef);
+                    printf("x^");
+                    printf("%d", ans_a->exp);
+                    ans_a = ans_a->next;
+                }
             }
         }
+        flag_del = 0;
     }
 
 
